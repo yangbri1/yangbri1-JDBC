@@ -47,40 +47,43 @@ public class Lab {
             // connect to DB 'songs'
             Connection conn = ConnectionUtil.getConnection();
             // 
+            // String sql = "INSERT INTO songs (title, artist) VALUES (?, ?)";
             /* NOTICE: 'PreparedStatement' ----------- .prepareStatement() */
-            // PreparedStatement prepState = conn.prepareStatement("INSERT INTO songs (id, title, artist) VALUES (?, ?, ?)");
-            // prepState.setId(1, song.getId());
-            // prepState.settitle(2, song.gettitle());
-            // prepState.setArtist(3, song.getArtist());
-            // prepState.executeUpdate();
+            PreparedStatement prepState = conn.prepareStatement("INSERT INTO songs (id, title, artist) VALUES (?, ?, ?)");
+            prepState.setInt(1, song.getId());
+            prepState.setString(2, song.gettitle());
+            prepState.setString(3, song.getArtist());
+            prepState.executeUpdate();
 
-            Statement stmt = conn.createStatement();
+            // Statement stmt = conn.createStatement();
 
             // write out desired SQL query statement
             // String sql = "INSERT INTO songs (id, title, artist) VALUES (song.id, song.title, song.artist)";
-            // String sql = "INSERT INTO songs (id, title, artist) VALUES song";
+            
             // https://www.tutorialspoint.com/java-resultset-insertrow-method-with-example
-            String sql = "SELECT * from songs";
+            // String sql = "SELECT * from songs";
             // stmt.setId = song.id;
             
             // retrieving data from DB
             // ResultSet resultSet = stmt.executeUpdate(sql);
-            ResultSet rs = stmt.executeQuery(sql);
+            // ResultSet rs = stmt.executeQuery(sql);
             // navigate cursor to last row in result set & return true if exist
-            rs.last();
+            // rs.last();
             // dynamically update column 'id' according to existing number of records/rows
-            int id = rs.getInt("id") + 1;
-            String titleCopy = rs.getString("title");
-            String artistCopy = rs.getString("artist");
+            // int id = rs.getInt("id") + 1;
+            // String titleCopy = rs.getString("title");
+            // String artistCopy = rs.getString("artist");
             // move to row to be inserted at
-            rs.moveToInsertRow();
+            // rs.moveToInsertRow();
             // update 'id' to next number
-            rs.updateInt("id", id);
-            rs.updateString("title", song.gettitle());
-            rs.updateString("artist", song.getArtist());
+            // rs.updateInt("id", id);
+            // rs.updateString("title", song.gettitle());
+            // rs.updateString("artist", song.getArtist());
+
             // rs.updateString("title", titleCopy);
             // rs.updateString("artist", artistCopy);
-            rs.insertRow();
+
+            // rs.insertRow();
 
         } catch (SQLException e) {
             // TODO: handle exception
