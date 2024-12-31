@@ -46,13 +46,17 @@ public class Lab {
         try {
             // connect to DB 'songs'
             Connection conn = ConnectionUtil.getConnection();
-            // 
             // String sql = "INSERT INTO songs (title, artist) VALUES (?, ?)";
             /* NOTICE: 'PreparedStatement' ----------- .prepareStatement() */
+            
+            // create SQLPreparedStatement
             PreparedStatement prepState = conn.prepareStatement("INSERT INTO songs (id, title, artist) VALUES (?, ?, ?)");
+            // utilize 'Song' class obj's getter methods on given 'song' parameter to retrieve respective columns 'id', 'title', 'artist' ...
+            // implement PreparedStatement's built-in .setInt() & .setString() methods to add 'song' data to 'songs' DB table
             prepState.setInt(1, song.getId());
             prepState.setString(2, song.gettitle());
             prepState.setString(3, song.getArtist());
+            // execute SQL query
             prepState.executeUpdate();
 
             // Statement stmt = conn.createStatement();
