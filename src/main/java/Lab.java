@@ -2,6 +2,7 @@
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -36,13 +37,31 @@ import util.ConnectionUtil;
  */
 public class Lab {
 
+    // 'createSong' method w/ no return type (void)
     public void createSong(Song song)  {
         //write jdbc code here
         // INSERT INTO songs (id, title, artist) VALUES (4, 'After LIKE', 'IVE');
         // INSERT INTO songs (song.id, title, artist) VALUES song;
 
+        try {
+            // connect to DB 'songs'
+            Connection conn = ConnectionUtil.getConnection();
+            // 
+            PreparedStatement prepState = conn.prepareStatement("INSERT INTO songs (id, title, artist) VALUES (?, ?, ?)");
+            prepState.setId(1, song.getId());
+            prepState.settitle(2, song.gettitle());
+            prepState.setArtist(3, song.getArtist());
+
+            prepState.executeUpdate();
+
+        } catch (SQLException e) {
+            // TODO: handle exception
+            e.printStackTrace();
+        }
+
     }
 
+    // 'getAllSongs' method w/ return type of List<Song> 
     public List<Song> getAllSongs(){
         List<Song> songs = new ArrayList<>();
 
@@ -51,7 +70,8 @@ public class Lab {
         // creating a DB connection
         try {
             Connection conn = ConnectionUtil.getConnection();
-            // 
+            // create statement obj to send SQL statements to DB
+            /* NOTICE: 'Statement' ---------- .createStatement()  */
             Statement stmt = conn.createStatement();
             // write out desired SQL query statement
             String sql = "SELECT * FROM songs";
